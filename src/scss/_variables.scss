@@ -1,4 +1,17 @@
 //  Variables
 
-$body-bg: #e2e8f0;
-$body-color: #64748b;
+// $body-bg: #e2e8f0;
+// $body-color: #64748b;
+
+$body-bg: #fff;
+$body-color: #3d3d3d;
+$font-playfair: 'Playfair Display', serif;
+
+// Typography
+// Headings
+$headings-font-family: 'Playfair Display', serif !important;
+$font-size-base: 1rem;
+
+// Blockquotes
+$blockquote-font-size: $font-size-base * 1.25;
+$blockquote-footer-font-size: $font-size-base * 1.25;

@@ -1,13 +1,23 @@
+'use strict';
+
+//const fs = require('fs');
+const path = require('path');
 const CopyPlugin = require('copy-webpack-plugin');
 const Dotenv = require('dotenv-webpack');
 const ESLintPlugin = require('eslint-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const StylelintPlugin = require('stylelint-webpack-plugin');
+const HtmlWebpackInjector = require('html-webpack-injector');
+const ExtraWatchWebpackPlugin = require('extra-watch-webpack-plugin');
+const LiveReloadPlugin = require('webpack-livereload-plugin');
 
 // import and configure dotenv
 require('dotenv-defaults').config();
 
 const paths = require('./paths');
+
+const layout = `${paths.src}/index.html`;
+const templates = `${paths.src}/templates`;
 
 let publicUrl = process.env.NODE_ENV === 'production' ? process.env.PUBLIC_URL : '/';
 if (!publicUrl) {
@@ -52,11 +62,40 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: `${paths.src}/index.html`,
+      template: layout,
       templateParameters: {
         publicUrl: publicUrl.slice(0, -1),
       },
-      title: 'Webpack Bootstrap5 Starter',
+      title: 'Bootstrap 5 Typo',
+      filename: 'index.html',
+      content: templates + '/home.html',
+      inject: true,
+    }),
+    new HtmlWebpackPlugin({
+      template: layout,
+      templateParameters: {
+        publicUrl: publicUrl.slice(0, -1),
+      },
+      title: 'Math',
+      filename: 'math.html',
+      content: templates + '/math.html',
+      inject: true,
+    }),
+    new HtmlWebpackPlugin({
+      template: layout,
+      templateParameters: { publicUrl: publicUrl.slice(0, -1) },
+      title: 'Articles',
+      filename: 'articles.html',
+      content: templates + '/articles.html',
+      inject: true,
+    }),
+    new HtmlWebpackPlugin({
+      template: layout,
+      templateParameters: { publicUrl: publicUrl.slice(0, -1) },
+      title: 'Article',
+      filename: 'article.html',
+      content: templates + '/article.html',
+      inject: true,
     }),
     new CopyPlugin({
       patterns: [
@@ -75,5 +114,13 @@ module.exports = {
       context: paths.src,
     }),
     new Dotenv(),
+    new HtmlWebpackInjector(),
+    new LiveReloadPlugin({
+      appendScriptTag: true,
+    }),
+    new ExtraWatchWebpackPlugin({
+      dirs: path.resolve(__dirname, 'src'),
+      files: ['./src/**/*.html', './src/templates/**/*.html'], // This does not work
+    }),
   ],
 };

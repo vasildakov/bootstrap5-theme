@@ -7,9 +7,10 @@ module.exports = merge(webpackCommonConfig, {
   devtool: 'eval-source-map',
   devServer: {
     open: true,
+    liveReload: true,
     hot: true,
-    watchFiles: [`${paths.src}/*.html`, `${paths.src}/images/**.*`],
-    port: process.env.PORT || 8080,
+    watchFiles: [`${paths.src}/*.html`, `${paths.src}/images/**.*`, 'src/**/*'],
+    port: process.env.PORT || 8088,
   },
   module: {
     rules: [
@@ -26,6 +27,13 @@ module.exports = merge(webpackCommonConfig, {
           'postcss-loader',
           'sass-loader',
         ],
+      },
+      {
+        test: /\.(gif|ico|jpe?g|png|svg|webp)$/i,
+        type: 'asset/resource',
+        generator: {
+          filename: 'images/[name][ext]',
+        },
       },
     ],
   },
