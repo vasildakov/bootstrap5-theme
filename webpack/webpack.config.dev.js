@@ -10,7 +10,7 @@ module.exports = merge(webpackCommonConfig, {
     liveReload: true,
     hot: true,
     watchFiles: [`${paths.src}/*.html`, `${paths.src}/images/**.*`, 'src/**/*'],
-    port: process.env.PORT || 8088,
+    port: process.env.PORT || 3002,
   },
   module: {
     rules: [
